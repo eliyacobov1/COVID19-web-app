@@ -8,5 +8,98 @@
     "ministry_of_health_link": "https://www.hhs.gov",
     "red_countries": ["India"],
     "update_date" : "20.05.2021"
-  }
-]
+  },
+  {
+    "name" : "Israel",
+    "restrictions" : ["gathering limitation", "indoor mask wearing"],
+    "corona_policy": ["green/vaccine certification needed", "negative COVID19 entry test needed"],
+    "vaccination_percentage": 90,
+    "risk_rate" : 1,
+    "ministry_of_health_link": "https://www.hhs.gov",
+    "red_countries": ["India", "Brazil"],
+    "update_date" : "20.05.2021"
+  },
+  {
+    "name" : "Germany",
+    "restrictions" : ["Recreation sites open: for vaccinated individuals only" , "gathering limitation", "night lockdown"],
+    "corona_policy": ["green/vaccine certification needed", "Self-quarantine upon arrival"],
+    "vaccination_percentage": 50,
+    "risk_rate" : 4,
+    "ministry_of_health_link": "https://www.hhs.gov",
+    "red_countries": ["India", "Brazil"],
+    "update_date" : "20.05.2021"
+  },
+  {
+    "name" : "Franch",
+    "restrictions" : ["Recreation sites closed", "outdoor mask wearing", "indoor mask wearing"],
+    "corona_policy": ["green/vaccine certification needed", "Self-quarantine upon arrival"],
+    "vaccination_percentage": 35,
+    "risk_rate" : 5,
+    "ministry_of_health_link": "https://www.hhs.gov",
+    "red_countries": ["India", "Brazil"],
+    "update_date" : "20.05.2021"
+  },
+  {
+    "name" : "UK",
+    "restrictions" : ["Recreation sites open: for vaccinated individuals only", "outdoor mask wearing"],
+    "corona_policy": ["green/vaccine certification needed", "negative COVID19 entry test needed"],
+    "vaccination_percentage": 50,
+    "risk_rate" : 3,
+    "ministry_of_health_link": "https://www.hhs.gov",
+    "red_countries": ["India", "Brazil"],
+    "update_date" : "20.05.2021"
+  },
+  {
+    "name" : "Russia",
+    "restrictions" : ["night lockdown", "gathering limitation", "outdoor mask wearing"],
+    "corona_policy": ["green/vaccine certification needed"," Self-quarantine upon arrival"],
+    "vaccination_percentage": 65,
+    "risk_rate" : 2,
+
+    "ministry_of_health_link": "https://www.hhs.gov",
+    "red_countries": ["India", "Brazil"],
+    "update_date" : "20.05.2021"
+  },
+  {
+    "name" : "Netherlands",
+    "restrictions" : ["Recreation sites open: for vaccinated citizens or tourist", "gathering limitation", "indoor mask wearing"],
+    "corona_policy": ["green/vaccine certification needed", "negative COVID19 entry test needed"],
+    "vaccination_percentage": 50,
+    "risk_rate" : 2,
+    "ministry_of_health_link": "https://www.hhs.gov",
+    "red_countries": ["India", "Brazil"],
+    "update_date" : "20.05.2021"
+  },
+  {
+    "name" : "Greece",
+    "restrictions" : ["entertainments", "gathering limitation", "outdoor mask wearing", "indoor mask wearing"],
+    "corona_policy": ["green/vaccine certification needed", "negative COVID19 entry test needed"],
+    "vaccination_percentage": 50,
+    "risk_rate" : 3,
+    "ministry_of_health_link": "https://www.hhs.gov",
+    "red_countries": ["India", "Brazil"],
+    "update_date" : "20.05.2021"
+  },
+  {
+    "name" : "Spain",
+    "restrictions" : ["Recreation sites open: for vaccinated citizens or tourist", "gathering limitation"," indoor mask wearing"],
+      "corona_policy": ["green/vaccine certification needed", "negative COVID19 entry test needed"],
+      "vaccination_percentage": 50,
+      "risk_rate" : 3,
+      "ministry_of_health_link": "https://www.hhs.gov",
+      "red_countries": ["India", "Brazil"],
+      "update_date" : "20.05.2021"
+      },
+      {
+        "name" : "Canada",
+        "restrictions" : ["night lockdown", "gathering limitation"],
+        "corona_policy": ["green/vaccine certification needed", "Self-quarantine upon arrival"],
+        "vaccination_percentage": 50,
+        "risk_rate" : 3,
+        "ministry_of_health_link": "https://www.hhs.gov",
+        "red_countries": ["India", "Brazil"],
+        "update_date" : "20.05.2021"
+      }
+    ]
+
+

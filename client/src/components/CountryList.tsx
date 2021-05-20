@@ -33,19 +33,18 @@ const CountryList = (props: {
                 onMouseOver={() => app.setHoveringTicket(country)} onMouseLeave={() => app.setHoveringTicket()}>
                 {/* ticket starts here*/}
                 {app.state.hoveredCountry === country.name && <button onClick={()=>app.hideCountry(country.name)}>Hide</button>}
-                <h5 className='title'>{country.name} {riskLevelStr(country.risk_rate)}</h5>
+                <h4 className='title'>{country.name}</h4> <h6>{riskLevelStr(country.risk_rate)}</h6>
                 <div className='wrapper-row'>
-                    <div className='meta-data'>Last update date: { country.update_date }</div>
                     {/* country restrictions */}
                     {country.restrictions ? country.restrictions.map((res) => (
                         <span className='label'>{res}</span>)) : null}
                 </div>
                 <div><h5 className='content'>{country.content ? country.content : null}</h5></div>
                 <footer>
+                    <div className='meta-data'>Last update date: { country.update_date }</div>
                     <div className='wrapper-row'>
                         {/* show page button */}
-                        <button onClick={() => null} className='bottom-right-btn bg-success'>
-                            Open Country Page</button>
+                        <button className='bottom-right-btn bg-success'>More Info.</button>
                     </div>
                 </footer>
                 {/* ticket ends here*/}
