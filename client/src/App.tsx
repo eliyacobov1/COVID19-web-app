@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import {createApiClient, Country, Corona_policy, Ticket} from './api';
+import {createApiClient, Country, Ticket} from './api';
 import Pagination from './components/Pagination'
 import TicketList from "./components/TicketList";
 import CountryList from "./components/CountryList";
@@ -75,7 +75,7 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	/**
-	 * (Q1.b) return true if the ticket with given id is hidden, false otherwise
+	 * return true if the ticket with given id is hidden, false otherwise
 	 */
 	isHidden = (id: string) => {
 		let hiddenTickets = this.state.hiddenTickets
@@ -88,7 +88,7 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	/**
-	 * (Q1.b) make all of the hidden tickets visible again
+	 * make all of the hidden tickets visible again
 	 */
 	restoreTickets() {
 		this.setState({
@@ -105,7 +105,7 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	/**
-	 * 2.d make a get request and return search results from server
+	 * make a get request and return search results from server
 	 */
 	onSearch = async (val: string) => {
 		clearTimeout(this.searchDebounce);
@@ -151,7 +151,7 @@ export class App extends React.PureComponent<{}, AppState> {
 			<div id="wrapper"> {/* ensures everything stays in place on window resize */}
 				<main>
 				<h1>COVID19 For Tourists</h1>
-				{/* Q1.c Dark mode button */}
+				{/* Dark mode button */}
 				<h4 className='btn btn-outline-secondary dark-mode-btn' onClick={() => this.toggleDarkMode()}>Toggle {theme === LIGHT_MODE  ? 'Dark' : 'Light'} Mode</h4>
 				<header>
 					<input type="search" placeholder="Search..." onChange={(e) => this.onSearch(e.target.value)}/>

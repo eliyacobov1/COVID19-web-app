@@ -32,13 +32,22 @@ export type Ticket = {
 
 export type ApiClient = {
     getPage: (page: number, searchVal: string) => Promise<Ticket[]>;
+    getCountryPage: (page: number, searchVal: string) => Promise<Country[]>;
     getTickets: (searchVal: string) => Promise<Ticket[]>;
-    clone: (ticket: Ticket) => Promise<Ticket>;
+    getCountries: (searchVal: string) => Promise<Country[]>;
 }
 
 export const createApiClient = (): ApiClient => {
     return {
         getTickets: (searchVal: string) => {
+            if(searchVal !== ''){
+                return axios.get(`${APIRootPath}${APISearchQuery}${searchVal}`)
+                    .then((res) => res.data);
+            }
+            return axios.get(APIRootPath).then((res) => res.data);
+        },
+
+        getCountries: (searchVal: string) => {
             if(searchVal !== ''){
                 return axios.get(`${APIRootPath}${APISearchQuery}${searchVal}`)
                     .then((res) => res.data);
@@ -60,12 +69,15 @@ export const createApiClient = (): ApiClient => {
                 .then((res) => res.data).catch(error => console.log(error));
         },
 
-        /**
-         * Q2.a Clone method
-         */
-        clone: (obj) => {
-            return axios.post(APIRootPath, obj).then((res) => res.data)
-                .catch(error => console.log(error));
-        }
+        getCountryPage: (page: number, searchVal: string) => {
+            if(searchVal !== ''){
+                // get paginated data with accordance to searchVal
+                return axios.get(`${APIRootPath}${APISearchQuery}${searchVal}&${APIPageQuery}\
+                ${page}${APIPageLimitQuery}${PAGE_SIZE}`)
+                    .then((res) => res.data).catch(error => console.log(error));
+            }
+            return axios.get(`${APIRootPagePath}${page}${APIPageLimitQuery}${PAGE_SIZE}`)
+                .then((res) => res.data).catch(error => console.log(error));
+        },
     }
 }

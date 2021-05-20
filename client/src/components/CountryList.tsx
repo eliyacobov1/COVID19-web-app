@@ -3,22 +3,22 @@ import App from "../App";
 import {Country} from "../api";
 
 /**
- * this component renders each ticket in the array tickets
+ * this component renders each country in the country array
  */
 const CountryList = (props: {
     app: App,
     countries: Country[],
 }) => {
     const app = props.app;  // main App component
-    // Q1.b, render a ticket only if it is not hidden
+    // render a ticket only if it is not hidden
     return (<ul className='tickets'>
         {props.countries.map((country) => (app.isHidden(country.name) ? null:
-            <li key={country.name} className={'ticket'}
+            <li key={country.name} className={'comment'}
                 onMouseOver={() => app.setHoveringCountry(country)}  onMouseLeave={() => app.setHoveringTicket()}>
                 {/* ticket starts here*/}
                 {app.state.hoveredTicket === country.name && <button onClick={()=>app.hideTicket(country.name)}>Hide</button>}
                 <h5 className='title'>{country.name}</h5>
-                {/* Q1.d, only 3 lines of the ticket are visible by default*/}
+                {/* only 3 lines of the ticket are visible by default*/}
                 <div><h5 className='content'>{country.content}</h5></div>
                 <footer>
                     <div className='wrapper-row'>
