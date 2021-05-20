@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser = require('body-parser');
-import {countryData, tempData} from './temp-data';
+import {countryData} from './temp-data';
 import { serverAPIPort, APIPath } from '../configuration';
 import {findCountryIndex, searchTerm} from './utils'
 console.log('starting server', { serverAPIPort, APIPath });
