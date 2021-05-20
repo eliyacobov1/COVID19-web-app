@@ -1,1 +1,1 @@
-# Ticket App
+# COVID19 web-app app for tourists
