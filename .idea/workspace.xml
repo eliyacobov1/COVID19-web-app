@@ -17,8 +17,8 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/server/temp-data.ts" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/server/utils.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/server/temp-data.ts" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1pAFhir752hOtE3Awy4QCUKwXp8" />
   <component name="ProjectViewState">
@@ -31,7 +31,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.18.2" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.20.12" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -41,7 +41,7 @@
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
-    <property name="ts.external.directory.path" value="C:\Users\Eli\Desktop\projects, software and misc\Ticket Web App\server\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\Eli\Desktop\projects, software and misc\COVID19 web app\client\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -70,6 +70,7 @@
       <workItem from="1620713160603" duration="2902000" />
       <workItem from="1621507916311" duration="1600000" />
       <workItem from="1621513241721" duration="220000" />
+      <workItem from="1621514640188" duration="2995000" />
     </task>
     <servers />
   </component>
