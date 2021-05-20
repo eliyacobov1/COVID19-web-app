@@ -3,8 +3,8 @@
     "name" : "USA",
     "restrictions" : ["Recreation sites closed" , "gathering limitation", "outdoor mask wearing"],
     "corona_policy": ["green/vaccine certification needed", "negative COVID19 entry test needed"],
-    "vaccination_percentage": "50",
-    "risk_rate" : "3",
+    "vaccination_percentage": 50,
+    "risk_rate" : 3,
     "ministry_of_health_link": "https://www.hhs.gov",
     "red_countries": ["India"],
     "update_date" : "20.05.2021"
