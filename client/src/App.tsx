@@ -1,24 +1,23 @@
 import React from 'react';
 import './App.scss';
-import {createApiClient, Ticket, Comment} from './api';
+import {createApiClient, Country, Corona_policy, Ticket} from './api';
 import Pagination from './components/Pagination'
 import TicketList from "./components/TicketList";
+import CountryList from "./components/CountryList";
 
 export type AppState = {
+	countries?: Country[],
 	tickets?: Ticket[],
 	theme: number,
 	numTickets?: number, // total number of tickets, used for pagination
 	hiddenTickets?: string[], // ids of hidden tickets
-	commentSection?: string[], // ids of tickets with open comment section
-	expandedTickets?: string[], // ids of tickets in expanded view
 	hoveredTicket?: string, // ticket which the mouse is hovering over (id)
+	hoveredCountry?: string, // country which the mouse is hovering over (id)
 	search: string;
 }
 
 const DARK_MODE = 1
 const LIGHT_MODE = 0
-export const TOGGLE_EXPAND = 0
-export const TOGGLE_COMMENTS = 1
 
 const api = createApiClient();
 
@@ -33,79 +32,10 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	async componentDidMount() {
 		this.setState({
+			// countries: await api.getPage(1, this.state.search),
 			tickets: await api.getPage(1, this.state.search),
 			numTickets: (await api.getTickets(this.state.search)).length
 		});
-	}
-
-	/**
-	 * Q2.a clone the given ticket
-	 */
-	async cloneTicket(ticket: Ticket) {
-		let newTicket = {...ticket};
-		delete newTicket.id;
-		delete newTicket.comments;
-		delete newTicket.creationTime; // these properties are not duplicated
-		// render the first page where the cloned ticket can be seen
-		api.clone(ticket).then(() => this.componentDidMount())
-		alert('Ticket cloned successfully!')
-	}
-
-	/**
-	 * (Q3) Show or hide the comment section (Q1.d) add or
-	 * remove a ticket id from the expanded tickets array
-	 * of the ticket with the given id.
-	 * @param param indicates which aspect of the ticket to change
-	 *   (expand the ticket or show the ticket's comment section)
-	 * @param id the id of the ticket to change the status of
-	 */
-	toggleTicketStatus = (param: number, id: string) => {
-		let arr: string[]
-		if(param === TOGGLE_EXPAND){
-			arr = this.state.expandedTickets ?
-				[...this.state.expandedTickets] : [];
-		}
-		else{
-			arr = this.state.commentSection ?
-				[...this.state.commentSection] : [];
-		}
-		if (arr.includes(id)){
-			const index = arr.indexOf(id, 0);
-			if (index > -1) {
-				arr.splice(index, 1);
-			}
-		}
-		else{
-			arr.push(id)
-		}
-		if (param === TOGGLE_EXPAND){
-			this.setState({
-			expandedTickets: arr
-			})
-		}
-		else{
-			this.setState({
-				commentSection: arr
-			})
-		}
-	}
-
-	/**
-	 * Q3 add a comment to the ticket with given id
-	 */
-	addComment = async (id: string, comment: Comment) => {
-		if (!comment)
-			return;
-		let tickets = this.state.tickets ? [...this.state.tickets] : []
-		for(let i = 0; i < tickets.length; i += 1) {
-			if(tickets[i].id === id) {
-				tickets[i] = await api.addComment(tickets[i], comment);
-				this.setState({
-					tickets: tickets
-				})
-				alert('Comment added successfully!')
-			}
-		}
 	}
 
 	/**
@@ -136,40 +66,21 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	/**
+	 * set the currently hovered over country to be the given ticket
+	 */
+	setHoveringCountry = (country?: Country) => {
+		this.setState({
+			hoveredTicket: country ? country.name : undefined
+		})
+	}
+
+	/**
 	 * (Q1.b) return true if the ticket with given id is hidden, false otherwise
 	 */
 	isHidden = (id: string) => {
 		let hiddenTickets = this.state.hiddenTickets
 		if (typeof hiddenTickets != "undefined"){
 			return hiddenTickets.includes(id);
-		}
-		else{
-			return false;
-		}
-	}
-
-	/**
-	 * (Q1.d) return true if the ticket with given
-	 * id should be in expanded view, false otherwise
-	 */
-	isExpanded = (id: string) => {
-		let expandedTickets = this.state.expandedTickets
-		if (typeof expandedTickets != "undefined"){
-			return expandedTickets.includes(id);
-		}
-		else{
-			return false;
-		}
-	}
-
-	/**
-	 * (Q3) return true if the ticket with given id should
-	 * be viewing it's comment section, false otherwise
-	 */
-	 areCommentsVisible = (id: string) => {
-		let commentSection = this.state.commentSection
-		if (typeof commentSection != "undefined"){
-			return commentSection.includes(id);
 		}
 		else{
 			return false;
@@ -187,6 +98,10 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	renderTickets = (tickets: Ticket[]) => {
 		return <TicketList app={this} tickets={tickets}/>
+	}
+
+	renderCountryTickets = (countries: Country[]) => {
+		return <CountryList app={this} countries={countries}/>
 	}
 
 	/**
@@ -229,13 +144,13 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	render() {
-		const {tickets, hiddenTickets, theme, numTickets} = this.state;
+		const {tickets, countries, hiddenTickets, theme, numTickets} = this.state;
 		const numHiddenTickets = hiddenTickets ? hiddenTickets.length : 0;
 
 		return (
 			<div id="wrapper"> {/* ensures everything stays in place on window resize */}
 				<main>
-				<h1>Tickets List</h1>
+				<h1>COVID19 For Tourists</h1>
 				{/* Q1.c Dark mode button */}
 				<h4 className='btn btn-outline-secondary dark-mode-btn' onClick={() => this.toggleDarkMode()}>Toggle {theme === LIGHT_MODE  ? 'Dark' : 'Light'} Mode</h4>
 				<header>
@@ -246,6 +161,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				{this.renderHiddenCount(numHiddenTickets)}
 				</div>
 				{tickets ? this.renderTickets(tickets) : <h2>Loading..</h2>}
+				{countries ? this.renderCountryTickets(countries) : <h2>Loading..</h2>}
 				{/* render pagination component only when there is more than 1 page */}
 				{tickets && tickets.length > 0 && tickets.length < (numTickets || 0) &&
 				<div className='page-section'><Pagination api={api} app={this}/></div>}

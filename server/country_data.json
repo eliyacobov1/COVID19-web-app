@@ -1,0 +1,13 @@
+[
+  {
+    "name": "spain",
+    "content": "spain has a nightly",
+    "update_date": "20/05/2021",
+    "restrictions": ["True, True, True, True,"],
+    "corona_policy": ["True, True, True"],
+    "vaccination_rate": 77,
+    "danger_rate": 5,
+    "ministry_of_health_link": "www.sjdnsad.com",
+    "green_countries": ["Israel"]
+  }
+]

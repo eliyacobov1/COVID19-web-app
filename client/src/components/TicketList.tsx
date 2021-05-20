@@ -1,8 +1,6 @@
 import React from "react";
-import App, {TOGGLE_COMMENTS, TOGGLE_EXPAND} from "../App";
+import App from "../App";
 import {Ticket} from "../api";
-import CreateCommentBox from "./CreateCommentBox";
-import CommentSection from "./CommentSection";
 
 /**
  * this component renders each ticket in the array tickets
@@ -21,17 +19,7 @@ const TicketList = (props: {
                 {app.state.hoveredTicket === ticket.id && <button onClick={()=>app.hideTicket(ticket.id)}>Hide</button>}
                 <h5 className='title'>{ticket.title}</h5>
                 {/* Q1.d, only 3 lines of the ticket are visible by default*/}
-                <div className={app.isExpanded(ticket.id) ? '' : 'truncate-overflow'}>
-                    <h5 className='content'>{ticket.content}</h5></div>
-                {/* see more/ see less button */}
-                <button onClick={() => app.toggleTicketStatus(TOGGLE_EXPAND, ticket.id)} className='see-more-btn'>
-                    {app.isExpanded(ticket.id) ? 'See less' : 'See more'}</button>
-                {app.areCommentsVisible(ticket.id) && <div>
-                    {/* comment section and new comment */}
-                    <hr className='bold-line'/>
-                    <CreateCommentBox handleSubmit={app.addComment} ticketID={ticket.id}/>
-                    <CommentSection comments={ticket.comments}/>
-                </div>}
+                <div><h5 className='content'>{ticket.content}</h5></div>
                 <footer>
                     <div className='wrapper-row'>
                         <div className='meta-data'>By {ticket.userEmail} | { new Date(ticket.creationTime).toLocaleString()}</div>
@@ -40,13 +28,8 @@ const TicketList = (props: {
                             <span className='label'>{label}</span>)) : null}
                     </div>
                     <div className='wrapper-row'>
-                    {/* Q3 show/hide comments button */}
-                    <button className="bottom-right-btn bg-info"
-                            onClick={() => app.toggleTicketStatus(TOGGLE_COMMENTS, ticket.id)}>
-                        {app.areCommentsVisible(ticket.id) ? 'Hide Comments': 'Show Comments'}
-                    </button>
                     {/* clone button */}
-                    <button onClick={() => app.cloneTicket(ticket)} className='bottom-right-btn bg-success'>
+                    <button onClick={() => null} className='bottom-right-btn bg-success'>
                         clone</button>
                     </div>
                 </footer>

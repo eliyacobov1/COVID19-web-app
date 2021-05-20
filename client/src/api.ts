@@ -3,6 +3,24 @@ import {APIPageLimitQuery, APIPageQuery, APIRootPagePath, APIRootPath, APISearch
 
 export const PAGE_SIZE = 20  // PAGE_SIZE is now an API constant
 
+export type Country = {
+    name: string
+    content: string
+    update_date: string
+    restrictions: string[]
+    corona_policy: Corona_policy
+    vaccination_rate: number
+    risk_level: number
+    ministry_of_health_link: string
+    green_countries: string[]
+}
+
+export type Corona_policy = { // TODO consider changing to list
+    green_certificate: boolean
+    entry_test: boolean
+    exit_test: boolean
+}
+
 export type Ticket = {
     id: string,
     title: string;
@@ -10,31 +28,12 @@ export type Ticket = {
     creationTime: number;
     userEmail: string;
     labels?: string[];
-    comments?: Comment[]
-}
-
-type countryObject = {
-    restrictions: number,
-    vaccination: boolean,
-
-    summary: string
-}
-
-/**
- * Q3 added anonymous comment mechanism
- */
-export type Comment = {
-    ticketID: string, // foreign key
-    author: string,
-    content: string,
-    creationTime: number
 }
 
 export type ApiClient = {
     getPage: (page: number, searchVal: string) => Promise<Ticket[]>;
     getTickets: (searchVal: string) => Promise<Ticket[]>;
     clone: (ticket: Ticket) => Promise<Ticket>;
-    addComment: (ticket: Ticket, comment: Comment) => Promise<Ticket>;
 }
 
 export const createApiClient = (): ApiClient => {
@@ -67,18 +66,6 @@ export const createApiClient = (): ApiClient => {
         clone: (obj) => {
             return axios.post(APIRootPath, obj).then((res) => res.data)
                 .catch(error => console.log(error));
-        },
-
-        /**
-         * Q3 add comment to ticket
-         */
-        addComment: (ticket, comment) => {
-            let comments = ticket.comments ? ticket.comments : []
-            comments.push(comment)
-            ticket ={...ticket, comments: comments}
-            return axios.put(APIRootPath, ticket).then((res) => res.data)
-                .catch(error => console.log(error));
         }
-
     }
 }
