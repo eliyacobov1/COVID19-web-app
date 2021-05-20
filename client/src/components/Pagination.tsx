@@ -41,7 +41,7 @@ export class Pagination extends React.Component<{api: ApiClient, app: App},
         this.app.componentDidMount().then(() =>
             this.setState({
             // @ts-ignore
-            totalPages: Math.ceil(this.app.state.numTickets/ PAGE_SIZE)
+            totalPages: Math.ceil(this.app.state.numCountries/ PAGE_SIZE)
         }))
     }
 
@@ -54,8 +54,8 @@ export class Pagination extends React.Component<{api: ApiClient, app: App},
         const app = this.app
         app.restoreTickets() // restore hidden tickets before moving to next page
         app.setState({
-            tickets: await this.api.getPage(pageNum, app.state.search),
-            numTickets: (await this.api.getTickets(app.state.search)).length
+            countries: await this.api.getPage(pageNum, app.state.search),
+            numCountries: (await this.api.getCountries(app.state.search)).length
         });
         this.setState({
             currentPage: pageNum,

@@ -1,8 +1,8 @@
 import express from 'express';
 import bodyParser = require('body-parser');
-import { tempData } from './temp-data';
+import {countryData, tempData} from './temp-data';
 import { serverAPIPort, APIPath } from '../configuration';
-import {findTicketIndex, searchTerm, uniqueID} from './utils'
+import {findCountryIndex, searchTerm} from './utils'
 console.log('starting server', { serverAPIPort, APIPath });
 
 const app = express();
@@ -41,10 +41,10 @@ app.get(APIPath, (req, res) => {
     }
   }
   else if (!page){ // return all available ticket data
-    res.send(tempData);
+    res.send(countryData);
   }
   else{ // return requested page
-    const paginatedData = tempData.slice((page - 1) * pageSize, page * pageSize);
+    const paginatedData = countryData.slice((page - 1) * pageSize, page * pageSize);
     res.send(paginatedData);
   }
 });

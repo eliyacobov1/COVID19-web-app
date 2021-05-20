@@ -2,16 +2,13 @@ import React from 'react';
 import './App.scss';
 import {createApiClient, Country, Ticket} from './api';
 import Pagination from './components/Pagination'
-import TicketList from "./components/TicketList";
 import CountryList from "./components/CountryList";
 
 export type AppState = {
 	countries?: Country[],
-	tickets?: Ticket[],
 	theme: number,
-	numTickets?: number, // total number of tickets, used for pagination
-	hiddenTickets?: string[], // ids of hidden tickets
-	hoveredTicket?: string, // ticket which the mouse is hovering over (id)
+	numCountries?: number, // total number of countries, used for pagination
+	hiddenCountries?: string[], // names of hidden countries
 	hoveredCountry?: string, // country which the mouse is hovering over (id)
 	search: string;
 }
@@ -32,55 +29,42 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	async componentDidMount() {
 		this.setState({
-			// countries: await api.getPage(1, this.state.search),
-			tickets: await api.getPage(1, this.state.search),
-			numTickets: (await api.getTickets(this.state.search)).length
+			countries: await api.getPage(1, this.state.search),
+			numCountries: (await api.getCountries(this.state.search)).length
 		});
 	}
 
 	/**
-	 * (Q1.b) event function that hides the ticket with the given id from the user
+	 * event function that hides the ticket with the given id from the user
 	 */
-	hideTicket = (id: string) => {
-		let hiddenTickets;
-		if(typeof this.state.hiddenTickets != "undefined") {
-			hiddenTickets = [...this.state.hiddenTickets]
-			hiddenTickets.push(id)
+	hideCountry = (name: string) => {
+		let hiddenCountries;
+		if(typeof this.state.hiddenCountries != "undefined") {
+			hiddenCountries = [...this.state.hiddenCountries]
+			hiddenCountries.push(name)
 		}
 		else {
-			hiddenTickets = [id]
+			hiddenCountries = [name]
 		}
-
 		this.setState({
-			hiddenTickets: hiddenTickets
-		})
-	}
-
-	/**
-	 * set the currently hovered over ticket to be the given ticket
-	 */
-	setHoveringTicket = (ticket?: Ticket) => {
-		this.setState({
-			hoveredTicket: ticket ? ticket.id : undefined
+			hiddenCountries: hiddenCountries
 		})
 	}
 
 	/**
 	 * set the currently hovered over country to be the given ticket
 	 */
-	setHoveringCountry = (country?: Country) => {
-		this.setState({
-			hoveredTicket: country ? country.name : undefined
-		})
+	setHoveringTicket = (country?: Country) => {
+		this.setState({ hoveredCountry: country ? country.name : undefined })
 	}
 
 	/**
 	 * return true if the ticket with given id is hidden, false otherwise
 	 */
-	isHidden = (id: string) => {
-		let hiddenTickets = this.state.hiddenTickets
-		if (typeof hiddenTickets != "undefined"){
-			return hiddenTickets.includes(id);
+	isHidden = (name: string) => {
+		let hiddenCountries = this.state.hiddenCountries
+		if (typeof hiddenCountries != "undefined"){
+			return hiddenCountries.includes(name);
 		}
 		else{
 			return false;
@@ -92,12 +76,8 @@ export class App extends React.PureComponent<{}, AppState> {
 	 */
 	restoreTickets() {
 		this.setState({
-			hiddenTickets: []
+			hiddenCountries: []
 		} )
-	}
-
-	renderTickets = (tickets: Ticket[]) => {
-		return <TicketList app={this} tickets={tickets}/>
 	}
 
 	renderCountryTickets = (countries: Country[]) => {
@@ -112,8 +92,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.searchDebounce = setTimeout(async () => {
 			this.setState({
 				search: val,
-				tickets: await api.getPage(1, val),
-				numTickets: (await api.getTickets(val)).length
+				numCountries: (await api.getCountries(val)).length
 			});
 		}, 300);
 	}
@@ -144,8 +123,8 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	render() {
-		const {tickets, countries, hiddenTickets, theme, numTickets} = this.state;
-		const numHiddenTickets = hiddenTickets ? hiddenTickets.length : 0;
+		const {countries, hiddenCountries, theme, numCountries} = this.state;
+		const numHiddenCountries = hiddenCountries ? hiddenCountries.length : 0;
 
 		return (
 			<div id="wrapper"> {/* ensures everything stays in place on window resize */}
@@ -157,13 +136,13 @@ export class App extends React.PureComponent<{}, AppState> {
 					<input type="search" placeholder="Search..." onChange={(e) => this.onSearch(e.target.value)}/>
 				</header>
 				<div className='results wrapper-row'>
-				{tickets ? <div>Showing {tickets.length-numHiddenTickets} results</div> : null }
-				{this.renderHiddenCount(numHiddenTickets)}
+				{countries ? <div>Showing {countries.length-numHiddenCountries} results</div> : null }
+				{this.renderHiddenCount(numHiddenCountries)}
 				</div>
-				{tickets ? this.renderTickets(tickets) : <h2>Loading..</h2>}
+				{/*{tickets ? this.renderTickets(tickets) : <h2>Loading..</h2>}*/}
 				{countries ? this.renderCountryTickets(countries) : <h2>Loading..</h2>}
 				{/* render pagination component only when there is more than 1 page */}
-				{tickets && tickets.length > 0 && tickets.length < (numTickets || 0) &&
+				{countries && countries.length > 0 && countries.length < (numCountries || 0) &&
 				<div className='page-section'><Pagination api={api} app={this}/></div>}
 				</main>
 			</div>)
