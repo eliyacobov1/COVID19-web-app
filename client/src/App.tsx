@@ -162,11 +162,13 @@ export class App extends React.PureComponent<{}, AppState> {
 			<div id="wrapper"> {/* ensures everything stays in place on window resize */}
 				<main>
 				<h1>COVID-Trip</h1>
+				<h5>Want To Trip Even Tough COVID</h5>
 				{/* Dark mode button */}
 				<h4 className='btn btn-outline-secondary dark-mode-btn' onClick={() => this.toggleDarkMode()}>Toggle {theme === LIGHT_MODE  ? 'Dark' : 'Light'} Mode</h4>
 				<header>
 					<input type="search" placeholder="search by country name" onChange={(e) => this.onSearch(e.target.value)}/>
 				</header>
+				<h5>Without:</h5>
 				{this.renderRestrictionLabels()}
 				<div className={"restrictions"}>
 				{countries ? <div>Showing {countries.length-numHiddenCountries} results</div> : null }
