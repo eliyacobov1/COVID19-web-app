@@ -1,7 +1,7 @@
 [
   {
     "name" : "USA",
-    "restrictions" : ["Recreation+sites+closed" , "gathering+limitation", "outdoor+mask+wearing"],
+    "restrictions" : ["Recreation sites closed" , "gathering limitation", "outdoor mask wearing"],
     "corona_policy": ["green/vaccine certification needed", "negative COVID19 entry test needed"],
     "vaccination_percentage": 50,
     "risk_rate" : 3,
@@ -11,7 +11,7 @@
   },
   {
     "name" : "Israel",
-    "restrictions" : ["gathering+limitation", "indoor+mask+wearing"],
+    "restrictions" : ["gathering limitation", "indoor mask wearing"],
     "corona_policy": ["green/vaccine certification needed", "negative COVID19 entry test needed"],
     "vaccination_percentage": 90,
     "risk_rate" : 1,
@@ -21,7 +21,7 @@
   },
   {
     "name" : "Germany",
-    "restrictions" : ["Recreation+sites+open:+for vaccinated individuals only" , "gathering limitation", "night lockdown"],
+    "restrictions" : ["Recreation sites open: for vaccinated individuals only" , "gathering limitation", "night lockdown"],
     "corona_policy": ["green/vaccine certification needed", "Self-quarantine upon arrival"],
     "vaccination_percentage": 50,
     "risk_rate" : 4,

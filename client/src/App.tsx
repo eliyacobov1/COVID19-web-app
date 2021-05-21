@@ -106,8 +106,8 @@ export class App extends React.PureComponent<{}, AppState> {
 		if(typeof this.state.filteredRestrictions === 'undefined') arr = [res]
 		else {
 			arr = [...this.state.filteredRestrictions]
-			if(arr.includes(res)){
-				let index = arr.indexOf(res);
+			let index = arr.indexOf(res);
+			if(index !== -1){
 				arr.splice(index, 1);
 			}
 			else {
