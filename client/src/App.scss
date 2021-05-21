@@ -52,6 +52,10 @@ body {
 		flex-direction: column;
 	}
 
+	.restrictions {
+		line-height: 35pt;
+	}
+
 	.results {
 		color: var(--fontColor);
 		font-size: 12px;
@@ -109,6 +113,39 @@ body {
 		border-radius: 20px;
 		font-size: 18px;
 		background-color: #ff9800;
+		margin: 2px;
+	}
+
+	.label {
+		color: white;
+		height: fit-content;
+		width: fit-content;
+		padding: 10px;
+		border-radius: 20px;
+		font-size: 18px;
+		background-color: #ff9800;
+		margin: 2px;
+	}
+
+	.blue-label {
+		color: white;
+		height: fit-content;
+		width: fit-content;
+		padding: 10px;
+		border-radius: 20px;
+		font-size: 18px;
+		background-color: #4038ba;
+		margin: 2px;
+	}
+
+	.purple-label {
+		color: white;
+		height: fit-content;
+		width: fit-content;
+		padding: 10px;
+		border-radius: 20px;
+		font-size: 18px;
+		background-color: #ff0051;
 		margin: 2px;
 	}
 

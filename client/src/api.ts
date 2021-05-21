@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APIPageLimitQuery, APIPageQuery, APIRootPagePath, APIRootPath, APISearchQuery } from './config';
+import { APIPageLimitQuery, restrictionsPath, APIPageQuery, APIRootPagePath, APIRootPath, APISearchQuery } from './config';
 
 export const PAGE_SIZE = 20  // PAGE_SIZE is now an API constant
 
@@ -15,19 +15,11 @@ export type Country = {
     red_countries: string[]
 }
 
-
-export type Ticket = {
-    id: string,
-    title: string;
-    content: string;
-    creationTime: number;
-    userEmail: string;
-    labels?: string[];
-}
-
 export type ApiClient = {
     getPage: (page: number, searchVal: string) => Promise<Country[]>;
     getCountries: (searchVal: string) => Promise<Country[]>;
+    getRestrictions: () => Promise<string[]>;
+    getFilteredCountries: (restrictions: string[]) => Promise<Country[]>;
 }
 
 export const createApiClient = (): ApiClient => {
@@ -54,5 +46,15 @@ export const createApiClient = (): ApiClient => {
             return axios.get(`${APIRootPagePath}${page}${APIPageLimitQuery}${PAGE_SIZE}`)
                 .then((res) => res.data).catch(error => console.log(error));
         },
+
+        getRestrictions: () => {
+            return axios.get(restrictionsPath).then((res) => res.data).catch(error => console.log(error));
+        },
+
+        getFilteredCountries: (restrictions: string[]) => {
+            let param = "?params="
+            restrictions.forEach((res) => param += res.replace(new RegExp(" ", "g"), "~") + '#')
+            return axios.get(restrictionsPath+param).then((res) => res.data).catch(error => console.log(error));
+        }
     }
 }

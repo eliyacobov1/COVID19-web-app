@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.scss';
-import {createApiClient, Country, Ticket} from './api';
+import {createApiClient, Country} from './api';
 import Pagination from './components/Pagination'
 import CountryList from "./components/CountryList";
 
 export type AppState = {
 	countries?: Country[],
+	restrictions?: string[],
+	filteredRestrictions?: string[],
 	theme: number,
 	numCountries?: number, // total number of countries, used for pagination
 	hiddenCountries?: string[], // names of hidden countries
@@ -30,7 +32,8 @@ export class App extends React.PureComponent<{}, AppState> {
 	async componentDidMount() {
 		this.setState({
 			countries: await api.getPage(1, this.state.search),
-			numCountries: (await api.getCountries(this.state.search)).length
+			numCountries: (await api.getCountries(this.state.search)).length,
+			restrictions: await api.getRestrictions()
 		});
 	}
 
@@ -92,9 +95,38 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.searchDebounce = setTimeout(async () => {
 			this.setState({
 				search: val,
-				numCountries: (await api.getCountries(val)).length
+				numCountries: (await api.getCountries(val)).length,
+				countries: await api.getPage(1, val),
 			});
 		}, 300);
+	}
+
+	filterByRestrictions = async (res: string) => {
+		let arr
+		if(typeof this.state.filteredRestrictions === 'undefined') arr = [res]
+		else {
+			arr = [...this.state.filteredRestrictions]
+			if(arr.includes(res)){
+				let index = arr.indexOf(res);
+				arr.splice(index, 1);
+			}
+			else {
+				arr.push(res)
+			}
+		}
+		this.setState({
+			filteredRestrictions: arr,
+			countries: await api.getFilteredCountries(arr)
+		});
+	}
+
+
+	renderRestrictionLabels = () => {
+		return this.state.restrictions ? this.state.restrictions.map((res) => (
+			<button className={this.state.filteredRestrictions ? (this.state.filteredRestrictions.includes(res) ?
+				"purple-label" : "blue-label") : "blue-label"}
+					onClick={() => this.filterByRestrictions(res)}>
+				{res}</button>)) : null
 	}
 
 	/**
@@ -129,17 +161,17 @@ export class App extends React.PureComponent<{}, AppState> {
 		return (
 			<div id="wrapper"> {/* ensures everything stays in place on window resize */}
 				<main>
-				<h1>COVID19 For Tourists</h1>
+				<h1>COVID-Trip</h1>
 				{/* Dark mode button */}
 				<h4 className='btn btn-outline-secondary dark-mode-btn' onClick={() => this.toggleDarkMode()}>Toggle {theme === LIGHT_MODE  ? 'Dark' : 'Light'} Mode</h4>
 				<header>
-					<input type="search" placeholder="Search..." onChange={(e) => this.onSearch(e.target.value)}/>
+					<input type="search" placeholder="search by country name" onChange={(e) => this.onSearch(e.target.value)}/>
 				</header>
-				<div className='results wrapper-row'>
+				{this.renderRestrictionLabels()}
+				<div className={"restrictions"}>
 				{countries ? <div>Showing {countries.length-numHiddenCountries} results</div> : null }
 				{this.renderHiddenCount(numHiddenCountries)}
 				</div>
-				{/*{tickets ? this.renderTickets(tickets) : <h2>Loading..</h2>}*/}
 				{countries ? this.renderCountryTickets(countries) : <h2>Loading..</h2>}
 				{/* render pagination component only when there is more than 1 page */}
 				{countries && countries.length > 0 && countries.length < (numCountries || 0) &&

@@ -32,7 +32,7 @@ const CountryList = (props: {
             <li key={country.name} className={'comment'}
                 onMouseOver={() => app.setHoveringTicket(country)} onMouseLeave={() => app.setHoveringTicket()}>
                 {/* ticket starts here*/}
-                {app.state.hoveredCountry === country.name && <button onClick={()=>app.hideCountry(country.name)}>Hide</button>}
+                {app.state.hoveredCountry === country.name && <button onClick={()=>app.hideCountry(country.name)}>X</button>}
                 <h4 className='title'>{country.name}</h4> <h6>{riskLevelStr(country.risk_rate)}</h6>
                 <div className='wrapper-row'>
                     {/* country restrictions */}

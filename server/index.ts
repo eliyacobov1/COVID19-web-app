@@ -1,8 +1,8 @@
 import express from 'express';
 import bodyParser = require('body-parser');
-import {countryData} from './temp-data';
-import { serverAPIPort, APIPath } from '../configuration';
-import {findCountryIndex, searchTerm} from './utils'
+import {countryData, restrictionsArray} from './temp-data';
+import { serverAPIPort, APIPath, restrictionsPath } from '../configuration';
+import {searchTerm, unrestrictedCountries} from './utils'
 console.log('starting server', { serverAPIPort, APIPath });
 
 const app = express();
@@ -16,10 +16,6 @@ app.use((_, res, next) => {
   next();
 });
 
-/**
- * mechanism which is implemented by passing the page size(pageLimit parameter) and page number
- * to the server as query string parameters
- */
 app.get(APIPath, (req, res) => {
   // @ts-ignore
   const page: number = parseInt(req.query.page);
@@ -47,6 +43,21 @@ app.get(APIPath, (req, res) => {
     const paginatedData = countryData.slice((page - 1) * pageSize, page * pageSize);
     res.send(paginatedData);
   }
+});
+
+
+app.get(restrictionsPath, (req, res) => {
+  // @ts-ignore
+  const param: string = req.query.params;
+  if(param){
+    let restrictions = param.split('#')
+    let countries = unrestrictedCountries(restrictions.map(res => {
+      return res.replace(new RegExp("~", "g"),
+          " ");
+    }))
+    res.send(countries);
+  }
+  else res.send(restrictionsArray);
 });
 
 app.listen(serverAPIPort);
