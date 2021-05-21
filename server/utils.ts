@@ -50,12 +50,14 @@ export const check_res_not_in_country = (country: Country, restriction : string)
 export const unrestrictedCountries = (restrictions : string[]) => {
     let output = Array();
     countryData.forEach((curr_country : Country) => {
-            restrictions.forEach(curr_res => {
-                if(check_res_not_in_country(curr_country, curr_res)) {
-                    output.push(curr_country)
-                }
-            })
+        let bool = true
+        restrictions.forEach(curr_res => {
+            if(!check_res_not_in_country(curr_country, curr_res)) {
+                bool = false
+            }
+        })
+        if(bool) output.push(curr_country)
         }
     )
-    return output
+    return restrictions
 }

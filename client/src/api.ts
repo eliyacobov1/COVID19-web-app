@@ -54,7 +54,7 @@ export const createApiClient = (): ApiClient => {
         getFilteredCountries: (restrictions: string[]) => {
             // get paginated data with accordance to searchVal
             let param = ""
-            restrictions.forEach((res) => param += res.replace(new RegExp(" ", "g"), "~") + '#')
+            restrictions.forEach((res) => param.concat(res.replace(new RegExp(" ", "g"), "~") + '#'))
             return axios.get(`${APIRootPath}${restrictionsSearchQuery}${param}`)
                 .then((res) => res.data).catch(error => console.log(error));
         }
