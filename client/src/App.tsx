@@ -30,11 +30,18 @@ export class App extends React.PureComponent<{}, AppState> {
 	searchDebounce: any = null;
 
 	async componentDidMount() {
-		this.setState({
-			countries: await api.getPage(1, this.state.search),
-			numCountries: (await api.getCountries(this.state.search)).length,
-			restrictions: await api.getRestrictions()
-		});
+		if (!this.state.filteredRestrictions) {
+			this.setState({
+				countries: await api.getPage(1, this.state.search),
+				numCountries: (await api.getCountries(this.state.search)).length,
+				restrictions: await api.getRestrictions()
+			});
+		}
+		else {
+			this.setState({
+				numCountries: this.state.countries ? this.state.countries.length : 0
+			});
+		}
 	}
 
 	/**
@@ -116,7 +123,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 		this.setState({
 			filteredRestrictions: arr,
-			countries: await api.getFilteredCountries(arr)
+			countries: await api.getFilteredCountries(arr),
 		});
 	}
 

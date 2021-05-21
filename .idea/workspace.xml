@@ -44,7 +44,7 @@
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
-    <property name="ts.external.directory.path" value="C:\Users\Eli\Desktop\projects, software and misc\COVID19 web app\client\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\Eli\Desktop\projects, software and misc\COVID19 web app\server\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -74,7 +74,8 @@
       <workItem from="1621507916311" duration="1600000" />
       <workItem from="1621513241721" duration="220000" />
       <workItem from="1621514640188" duration="37084000" />
-      <workItem from="1621561429855" duration="7774000" />
+      <workItem from="1621561429855" duration="8443000" />
+      <workItem from="1621620308626" duration="3209000" />
     </task>
     <servers />
   </component>

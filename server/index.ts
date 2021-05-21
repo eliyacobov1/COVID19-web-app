@@ -39,10 +39,10 @@ app.get(APIPath, (req, res) => {
     }
   }
   else if(restSearchParam){
-    let restrictions = restSearchParam.split('#')
-    let countries = unrestrictedCountries(restrictions.map(res => {
+    let restrictions = restSearchParam.split('1').map(res => {
       return res.replace(new RegExp("~", "g"), " ");
-    }))
+    })
+    let countries = unrestrictedCountries(restrictions)
     res.send(countries)
   }
   else if (!page){ // return all available ticket data

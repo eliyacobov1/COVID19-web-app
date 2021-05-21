@@ -30,7 +30,7 @@
     "update_date" : "20.05.2021"
   },
   {
-    "name" : "Franch",
+    "name" : "France",
     "restrictions" : ["Recreation sites closed", "outdoor mask wearing", "indoor mask wearing"],
     "corona_policy": ["green/vaccine certification needed", "Self-quarantine upon arrival"],
     "vaccination_percentage": 35,

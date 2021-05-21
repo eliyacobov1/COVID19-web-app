@@ -1,5 +1,5 @@
 import {Country} from '../client/src/api';
-import {check_res_not_in_country} from "./utils";
+import {checkResNotInCountry} from "./utils";
 
 
 const country_data = require('./country_data.json');

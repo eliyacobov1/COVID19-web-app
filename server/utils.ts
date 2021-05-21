@@ -35,29 +35,20 @@ export const findCountryIndex = (name: string) => {
     return -1;
 }
 
-export const check_res_not_in_country = (country: Country, restriction : string)=>
+export const checkResNotInCountry = (country: Country, restriction : string)=>
 {
-    let country_rests = country.restrictions;
-    country_rests.forEach((element)=> {
-            if(element === restriction) {
-                return false;
-            }
-        }
-    )
-    return true;
+    let countryRests = country.restrictions;
+    return countryRests.every(element => {
+        return element.localeCompare(restriction) != 0
+    })
 }
 
 export const unrestrictedCountries = (restrictions : string[]) => {
     let output = Array();
-    countryData.forEach((curr_country : Country) => {
-        let bool = true
-        restrictions.forEach(curr_res => {
-            if(!check_res_not_in_country(curr_country, curr_res)) {
-                bool = false
-            }
-        })
-        if(bool) output.push(curr_country)
+    countryData.forEach((currCountry : Country) => {
+            if (restrictions.every(res => checkResNotInCountry(currCountry, res)))
+                output.push(currCountry);
         }
     )
-    return restrictions
+    return output
 }
