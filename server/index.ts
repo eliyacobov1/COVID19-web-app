@@ -23,6 +23,8 @@ app.get(APIPath, (req, res) => {
   const pageSize: number = parseInt(req.query.PageLimit);
   // @ts-ignore
   const searchParam: string = req.query.superSearch;
+  // @ts-ignore
+  const restSearchParam: string = req.query.rest;
 
   // search mechanism implementation
   if (searchParam) {
@@ -36,6 +38,13 @@ app.get(APIPath, (req, res) => {
       res.send(paginatedData);
     }
   }
+  else if(restSearchParam){
+    let restrictions = restSearchParam.split('#')
+    let countries = unrestrictedCountries(restrictions.map(res => {
+      return res.replace(new RegExp("~", "g"), " ");
+    }))
+    res.send(countries)
+  }
   else if (!page){ // return all available ticket data
     res.send(countryData);
   }
@@ -47,17 +56,7 @@ app.get(APIPath, (req, res) => {
 
 
 app.get(restrictionsPath, (req, res) => {
-  // @ts-ignore
-  const param: string = req.query.params;
-  if(param){
-    let restrictions = param.split('#')
-    let countries = unrestrictedCountries(restrictions.map(res => {
-      return res.replace(new RegExp("~", "g"),
-          " ");
-    }))
-    res.send(countries);
-  }
-  else res.send(restrictionsArray);
+  res.send(restrictionsArray);
 });
 
 app.listen(serverAPIPort);

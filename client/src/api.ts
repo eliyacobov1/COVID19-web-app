@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APIPageLimitQuery, restrictionsPath, APIPageQuery, APIRootPagePath, APIRootPath, APISearchQuery } from './config';
+import { APIPageLimitQuery, restrictionsSearchQuery, restrictionsPath, APIPageQuery, APIRootPagePath, APIRootPath, APISearchQuery } from './config';
 
 export const PAGE_SIZE = 20  // PAGE_SIZE is now an API constant
 
@@ -52,9 +52,11 @@ export const createApiClient = (): ApiClient => {
         },
 
         getFilteredCountries: (restrictions: string[]) => {
-            let param = "?params="
+            // get paginated data with accordance to searchVal
+            let param = ""
             restrictions.forEach((res) => param += res.replace(new RegExp(" ", "g"), "~") + '#')
-            return axios.get(restrictionsPath+param).then((res) => res.data).catch(error => console.log(error));
+            return axios.get(`${APIRootPath}${restrictionsSearchQuery}${param}`)
+                .then((res) => res.data).catch(error => console.log(error));
         }
     }
 }

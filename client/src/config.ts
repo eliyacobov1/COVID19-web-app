@@ -11,3 +11,4 @@ export const restrictionsPath = `${APIRootPath}/restrictions`
 export const APIPageLimitQuery = '&PageLimit=';
 export const APIPageQuery = 'page=';
 export const APISearchQuery = '?superSearch=';
+export  const restrictionsSearchQuery = '?rest='
